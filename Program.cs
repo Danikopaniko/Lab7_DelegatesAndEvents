@@ -4,7 +4,7 @@ namespace Lab7_DelegatesAndEvents
 {
     public class BankTerminal
     {
-        public Action<int> OnMoneyWithdraw;
+        public event Action<int> OnMoneyWithdraw;
 
         public void Withdraw(int amount)
         {
@@ -24,8 +24,8 @@ namespace Lab7_DelegatesAndEvents
 
             terminal.Withdraw(500);
 
-            terminal.OnMoneyWithdraw = null;
-            terminal.OnMoneyWithdraw?.Invoke(999999);
+            // terminal.OnMoneyWithdraw = null; 
+            // terminal.OnMoneyWithdraw.Invoke(999999); 
 
             Console.ReadLine();
         }
