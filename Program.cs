@@ -1,20 +1,32 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Lab7_DelegatesAndEvents
 {
+    public class BankTerminal
+    {
+        public Action<int> OnMoneyWithdraw;
+
+        public void Withdraw(int amount)
+        {
+            Console.WriteLine($"[Terminal] Withdraw: {amount}");
+            OnMoneyWithdraw?.Invoke(amount);
+        }
+    }
+
     class Program
     {
         static void Main(string[] args)
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-            List<int> numbers = new List<int> { 1, 2, 3, 4, 5 };
-            Action<int> printAction = num => Console.Write(num + " ");
+            BankTerminal terminal = new BankTerminal();
+            terminal.OnMoneyWithdraw += amount => Console.WriteLine($"[SMS] -{amount}");
 
-            numbers.ForEach(printAction);
+            terminal.Withdraw(500);
 
-            Console.WriteLine();
+            terminal.OnMoneyWithdraw = null;
+            terminal.OnMoneyWithdraw?.Invoke(999999);
+
             Console.ReadLine();
         }
     }
